@@ -63,21 +63,31 @@ const nextTurn = function () {
 const evaluate = function (player) {
   let winner = false
   for (let row = 0; row < 3; row++) {
-    if (gameArray[row][0] === gameArray[row][1] && gameArray[row][1] === gameArray[row][2]) {
-      winner = [true, player[n % 2]]
+    if (gameArray[row][0]) {
+      if (
+        gameArray[row][0] === gameArray[row][1] && gameArray[row][1] === gameArray[row][2]
+      ) {
+        winner = [true, player[n % 2]]
+      }
     }
   }
   for (let col = 0; col < 3; col++) {
-    if (
-      gameArray[0][col] === gameArray[1][col] && gameArray[1][col] === gameArray[2][col]) {
+    if (gameArray[0][col]) {
+      if (
+        gameArray[0][col] === gameArray[1][col] && gameArray[1][col] === gameArray[2][col]) {
+        winner = [true, player[n % 2]]
+      }
+    }
+  }
+  if (gameArray[0][0]) {
+    if (gameArray[0][0] === gameArray[1][1] && gameArray[1][1] === gameArray[2][2]) {
       winner = [true, player[n % 2]]
     }
   }
-  if (gameArray[0][0] === gameArray[1][1] && gameArray[1][1] === gameArray[2][2]) {
-    winner = [true, player[n % 2]]
-  }
-  if (gameArray[0][2] === gameArray[1][1] && gameArray[1][1] === gameArray[2][0]) {
-    winner = [true, player[n % 2]]
+  if (gameArray[0][2]) {
+    if (gameArray[0][2] === gameArray[1][1] && gameArray[1][1] === gameArray[2][0]) {
+      winner = [true, player[n % 2]]
+    }
   }
   return winner
 }
