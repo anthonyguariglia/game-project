@@ -22,21 +22,22 @@ let gameWinner
 const onClick = function (event) {
   event.preventDefault()
   // Pull 2D cell location from ID
-  const positionin2DArray = event.target.id
-  const row = positionin2DArray.split('-')[0]
-  const col = positionin2DArray.split('-')[1]
+  const positionIn2DArray = event.target.id
+  const row = positionIn2DArray.split('-')[0]
+  const col = positionIn2DArray.split('-')[1]
   // get latest game board
   gameArray = gameAPI.getGameBoard()
   // Update game array with new value
   gameArray[row][col] = player[n % 2].symbol
   // check for winner
   gameWinner = evaluate(gameArray)
-  if (gameWinner[0]) {
-    endGame()
-  }
   // Compute 1D array cell value for API
   const cell = 3 * row + col
   gameAPI.updateGameBoard(cell, player[n % 2].symbol, gameWinner[0])
+  // End game if winner exists
+  if (gameWinner[0]) {
+    endGame()
+  }
   // increment turn
   nextTurn()
 }
