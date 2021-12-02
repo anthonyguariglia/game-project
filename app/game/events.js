@@ -1,6 +1,6 @@
 
-const gameAPI = require('./api.js')
-const gameUI = require('./ui.js')
+// const gameAPI = require('./api.js')
+// const gameUI = require('./ui.js')
 
 let n
 const gameArray =
@@ -18,7 +18,7 @@ const player = [
 ]
 
 let gameWinner
-let apiArray = []
+// let apiArray = []
 
 const on00click = function () {
   gameArray[0][0] = player[n % 2].symbol
