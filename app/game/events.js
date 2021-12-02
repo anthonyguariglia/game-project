@@ -1,9 +1,10 @@
 
 const gameAPI = require('./api.js')
 const gameUI = require('./ui.js')
+const store = require('../store.js')
 
-let n
-let gameArray =
+let n = 0
+const gameArray =
     [['', '', ''],
       ['', '', ''],
       ['', '', '']]
@@ -19,23 +20,32 @@ const player = [
 
 let gameWinner
 
+const onNewGame = function () {
+  gameAPI.newGame()
+    .then(gameUI.newGameSuccess)
+    .catch(gameUI.newGameFailure)
+}
+
 const onClick = function (event) {
   event.preventDefault()
   // Pull 2D cell location from ID
   const positionIn2DArray = event.target.id
-  const row = positionIn2DArray.split('-')[0]
-  const col = positionIn2DArray.split('-')[1]
+  console.log(event.target)
+  const row = parseInt(positionIn2DArray.split('-')[0])
+  const col = parseInt(positionIn2DArray.split('-')[1])
   // get latest game board
-  gameArray = gameAPI.getGameBoard()
-    .then(gameUI.onGetBoardSuccess)
-    .catch(gameUI.onGetBoardFailure)
+  //   gameAPI.getGameBoard(store.game._id)
+  //     .then(gameUI.onGetBoardSuccess)
+  //     .catch(gameUI.onGetBoardFailure)
   // Update game array with new value
+  console.log(player[n % 2])
+  console.log(row, col)
   gameArray[row][col] = player[n % 2].symbol
   // check for winner
   gameWinner = evaluate(gameArray)
   // Compute 1D array cell value for API
   const cell = 3 * row + col
-  gameAPI.updateGameBoard(cell, player[n % 2].symbol, gameWinner[0])
+  gameAPI.updateGameBoard(cell, player[n % 2].symbol, gameWinner[0], store.game._id)
     .then(gameUI.onUpdateBoardSuccess)
     .catch(gameUI.onUpdateBoardFailure)
   // End game if winner exists
@@ -77,5 +87,6 @@ const endGame = function () {
 }
 
 module.exports = {
+  onNewGame,
   onClick
 }

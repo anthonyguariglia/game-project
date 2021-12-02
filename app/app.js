@@ -10,6 +10,8 @@ $(() => {
   $('#sign-up-form').on('submit', authEvents.onSignUp)
   $('#sign-in-form').on('submit', authEvents.onSignIn)
 
+  $('#new-game').on('click', gameEvent.onNewGame)
+
   $('#0-0').on('click', gameEvent.onClick)
   $('#0-1').on('click', gameEvent.onClick)
   $('#0-2').on('click', gameEvent.onClick)

@@ -1,14 +1,29 @@
 const apiUrl = require('../config.js')
+const store = require('../store.js')
 
-const getGameBoard = function () {
-  const gameObject = $.ajax({
-    method: 'GET',
-    url: apiUrl
+const data = {}
+const newGame = function () {
+  return $.ajax({
+    method: 'POST',
+    url: apiUrl.apiUrl + '/games/',
+    data,
+    headers: {
+      Authorization: 'Bearer ' + store.user.token
+    }
   })
-  return gameObject.game.cells
 }
 
-const updateGameBoard = function (cell, symbol, result) {
+const getGameBoard = function (id) {
+  return $.ajax({
+    method: 'GET',
+    url: apiUrl.apiUrl + '/games/' + id,
+    headers: {
+      Authorization: 'Bearer ' + store.user.token
+    }
+  })
+}
+
+const updateGameBoard = function (cell, symbol, result, id) {
   const data = {
     game: {
       cell: {
@@ -18,15 +33,18 @@ const updateGameBoard = function (cell, symbol, result) {
       over: result
     }
   }
-  const gameObject = $.ajax({
+  return $.ajax({
     method: 'PATCH',
-    url: apiUrl,
-    data
+    url: apiUrl.apiUrl + '/games/' + id,
+    data,
+    headers: {
+      Authorization: 'Bearer ' + store.user.token
+    }
   })
-  return gameObject.game.cells
 }
 
 module.exports = {
+  newGame,
   getGameBoard,
   updateGameBoard
 }
