@@ -1,9 +1,9 @@
 
-// const gameAPI = require('./api.js')
+const gameAPI = require('./api.js')
 // const gameUI = require('./ui.js')
 
 let n
-const gameArray =
+let gameArray =
     [[$('#0-0').text(), $('#0-1').text(), $('#0-2').text()],
       [$('#1-0').text(), $('#1-1').text(), $('#1-2').text()],
       [$('#2-0').text(), $('#2-1').text(), $('#2-2').text()]]
@@ -18,59 +18,119 @@ const player = [
 ]
 
 let gameWinner
-// let apiArray = []
+let apiArray = []
 
-const on00click = function () {
+const on00Click = function () {
+  // get latest game board
+  gameArray = gameAPI.getGameBoard()
+  // update game board with new data
   gameArray[0][0] = player[n % 2].symbol
-  gameWinner = evaluate()
+  // prep array for api
+  apiArray = to1DArray(gameArray)
+  // update game board in api
+  gameAPI.updateGameBoard(apiArray)
+  // check for winner
+  gameWinner = evaluate(gameArray)
+  if (gameWinner[0]) {
+    endGame()
+  }
+  // increment turn
   nextTurn()
 }
 
-const on01click = function () {
+const on01Click = function () {
+  gameArray = gameAPI.getGameBoard()
   gameArray[0][1] = player[n % 2].symbol
-  gameWinner = evaluate()
+  apiArray = to1DArray(gameArray)
+  gameAPI.updateGameBoard(apiArray)
+  gameWinner = evaluate(gameArray)
+  if (gameWinner[0]) {
+    endGame()
+  }
   nextTurn()
 }
 
-const on02click = function () {
+const on02Click = function () {
+  gameArray = gameAPI.getGameBoard()
   gameArray[0][2] = player[n % 2].symbol
-  gameWinner = evaluate()
+  apiArray = to1DArray(gameArray)
+  gameAPI.updateGameBoard(apiArray)
+  gameWinner = evaluate(gameArray)
+  if (gameWinner[0]) {
+    endGame()
+  }
   nextTurn()
 }
 
-const on10click = function () {
+const on10Click = function () {
+  gameArray = gameAPI.getGameBoard()
   gameArray[1][0] = player[n % 2].symbol
-  gameWinner = evaluate()
+  apiArray = to1DArray(gameArray)
+  gameAPI.updateGameBoard(apiArray)
+  gameWinner = evaluate(gameArray)
+  if (gameWinner[0]) {
+    endGame()
+  }
   nextTurn()
 }
 
-const on11click = function () {
+const on11Click = function () {
+  gameArray = gameAPI.getGameBoard()
   gameArray[1][1] = player[n % 2].symbol
-  gameWinner = evaluate()
+  apiArray = to1DArray(gameArray)
+  gameAPI.updateGameBoard(apiArray)
+  gameWinner = evaluate(gameArray)
+  if (gameWinner[0]) {
+    endGame()
+  }
   nextTurn()
 }
 
-const on12click = function () {
+const on12Click = function () {
+  gameArray = gameAPI.getGameBoard()
   gameArray[1][2] = player[n % 2].symbol
-  gameWinner = evaluate()
+  apiArray = to1DArray(gameArray)
+  gameAPI.updateGameBoard(apiArray)
+  gameWinner = evaluate(gameArray)
+  if (gameWinner[0]) {
+    endGame()
+  }
   nextTurn()
 }
 
-const on20click = function () {
+const on20Click = function () {
+  gameArray = gameAPI.getGameBoard()
   gameArray[2][0] = player[n % 2].symbol
-  gameWinner = evaluate()
+  apiArray = to1DArray(gameArray)
+  gameAPI.updateGameBoard(apiArray)
+  gameWinner = evaluate(gameArray)
+  if (gameWinner[0]) {
+    endGame()
+  }
   nextTurn()
 }
 
-const on21click = function () {
+const on21Click = function () {
+  gameArray = gameAPI.getGameBoard()
   gameArray[2][1] = player[n % 2].symbol
-  gameWinner = evaluate()
+  apiArray = to1DArray(gameArray)
+  gameAPI.updateGameBoard(apiArray)
+  gameWinner = evaluate(gameArray)
+  if (gameWinner[0]) {
+    endGame()
+  }
   nextTurn()
 }
 
-const on22click = function () {
+const on22Click = function () {
+  gameArray = gameAPI.getGameBoard()
   gameArray[2][2] = player[n % 2].symbol
-  gameWinner = evaluate()
+  apiArray = to1DArray(gameArray)
+  gameAPI.updateGameBoard(apiArray)
+  gameWinner = evaluate(gameArray)
+  if (gameWinner[0]) {
+    endGame()
+  }
   nextTurn()
 }
 const nextTurn = function () {
@@ -78,35 +138,43 @@ const nextTurn = function () {
 }
 
 const evaluate = function (player) {
-  let winner
+  let winner = false
   for (let row = 0; row < 3; row++) {
     if (gameArray[row][0] === gameArray[row][1] && gameArray[row][1] === gameArray[row][2]) {
-      winner = player[n % 2]
+      winner = [true, player[n % 2]]
     }
   }
   for (let col = 0; col < 3; col++) {
     if (
       gameArray[0][col] === gameArray[1][col] && gameArray[1][col] === gameArray[2][col]) {
-      winner = player[n % 2]
+      winner = [true, player[n % 2]]
     }
   }
   if (gameArray[0][0] === gameArray[1][1] && gameArray[1][1] === gameArray[2][2]) {
-    winner = player[n % 2]
+    winner = [true, player[n % 2]]
   }
   if (gameArray[0][2] === gameArray[1][1] && gameArray[1][1] === gameArray[2][0]) {
-    winner = player[n % 2]
+    winner = [true, player[n % 2]]
   }
   return winner
 }
 
-module.exports = [
-  on00click,
-  on01click,
-  on02click,
-  on10click,
-  on11click,
-  on12click,
-  on20click,
-  on21click,
-  on22click
-]
+const to1DArray = function (arr) {
+  return arr[0].concat(arr[1].concat(arr[2]))
+}
+
+const endGame = function () {
+  // add code for end of game
+}
+
+module.exports = {
+  on00Click,
+  on01Click,
+  on02Click,
+  on10Click,
+  on11Click,
+  on12Click,
+  on20Click,
+  on21Click,
+  on22Click
+}
