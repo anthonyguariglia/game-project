@@ -1,6 +1,6 @@
 
 const gameAPI = require('./api.js')
-// const gameUI = require('./ui.js')
+const gameUI = require('./ui.js')
 
 let n
 let gameArray =
@@ -27,6 +27,8 @@ const onClick = function (event) {
   const col = positionIn2DArray.split('-')[1]
   // get latest game board
   gameArray = gameAPI.getGameBoard()
+    .then(gameUI.onGetBoardSuccess)
+    .catch(gameUI.onGetBoardFailure)
   // Update game array with new value
   gameArray[row][col] = player[n % 2].symbol
   // check for winner
@@ -34,6 +36,8 @@ const onClick = function (event) {
   // Compute 1D array cell value for API
   const cell = 3 * row + col
   gameAPI.updateGameBoard(cell, player[n % 2].symbol, gameWinner[0])
+    .then(gameUI.onUpdateBoardSuccess)
+    .catch(gameUI.onUpdateBoardFailure)
   // End game if winner exists
   if (gameWinner[0]) {
     endGame()
