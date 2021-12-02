@@ -4,9 +4,9 @@ const gameAPI = require('./api.js')
 
 let n
 let gameArray =
-    [[$('#0-0').text(), $('#0-1').text(), $('#0-2').text()],
-      [$('#1-0').text(), $('#1-1').text(), $('#1-2').text()],
-      [$('#2-0').text(), $('#2-1').text(), $('#2-2').text()]]
+    [['', '', ''],
+      ['', '', ''],
+      ['', '', '']]
 
 const player = [
   {
@@ -18,121 +18,29 @@ const player = [
 ]
 
 let gameWinner
-let apiArray = []
 
-const on00Click = function () {
+const onClick = function (event) {
+  event.preventDefault()
+  // Pull 2D cell location from ID
+  const positionin2DArray = event.target.id
+  const row = positionin2DArray.split('-')[0]
+  const col = positionin2DArray.split('-')[1]
   // get latest game board
   gameArray = gameAPI.getGameBoard()
-  // update game board with new data
-  gameArray[0][0] = player[n % 2].symbol
-  // prep array for api
-  apiArray = to1DArray(gameArray)
-  // update game board in api
-  gameAPI.updateGameBoard(apiArray)
+  // Update game array with new value
+  gameArray[row][col] = player[n % 2].symbol
   // check for winner
   gameWinner = evaluate(gameArray)
   if (gameWinner[0]) {
     endGame()
   }
+  // Compute 1D array cell value for API
+  const cell = 3 * row + col
+  gameAPI.updateGameBoard(cell, player[n % 2].symbol, gameWinner[0])
   // increment turn
   nextTurn()
 }
 
-const on01Click = function () {
-  gameArray = gameAPI.getGameBoard()
-  gameArray[0][1] = player[n % 2].symbol
-  apiArray = to1DArray(gameArray)
-  gameAPI.updateGameBoard(apiArray)
-  gameWinner = evaluate(gameArray)
-  if (gameWinner[0]) {
-    endGame()
-  }
-  nextTurn()
-}
-
-const on02Click = function () {
-  gameArray = gameAPI.getGameBoard()
-  gameArray[0][2] = player[n % 2].symbol
-  apiArray = to1DArray(gameArray)
-  gameAPI.updateGameBoard(apiArray)
-  gameWinner = evaluate(gameArray)
-  if (gameWinner[0]) {
-    endGame()
-  }
-  nextTurn()
-}
-
-const on10Click = function () {
-  gameArray = gameAPI.getGameBoard()
-  gameArray[1][0] = player[n % 2].symbol
-  apiArray = to1DArray(gameArray)
-  gameAPI.updateGameBoard(apiArray)
-  gameWinner = evaluate(gameArray)
-  if (gameWinner[0]) {
-    endGame()
-  }
-  nextTurn()
-}
-
-const on11Click = function () {
-  gameArray = gameAPI.getGameBoard()
-  gameArray[1][1] = player[n % 2].symbol
-  apiArray = to1DArray(gameArray)
-  gameAPI.updateGameBoard(apiArray)
-  gameWinner = evaluate(gameArray)
-  if (gameWinner[0]) {
-    endGame()
-  }
-  nextTurn()
-}
-
-const on12Click = function () {
-  gameArray = gameAPI.getGameBoard()
-  gameArray[1][2] = player[n % 2].symbol
-  apiArray = to1DArray(gameArray)
-  gameAPI.updateGameBoard(apiArray)
-  gameWinner = evaluate(gameArray)
-  if (gameWinner[0]) {
-    endGame()
-  }
-  nextTurn()
-}
-
-const on20Click = function () {
-  gameArray = gameAPI.getGameBoard()
-  gameArray[2][0] = player[n % 2].symbol
-  apiArray = to1DArray(gameArray)
-  gameAPI.updateGameBoard(apiArray)
-  gameWinner = evaluate(gameArray)
-  if (gameWinner[0]) {
-    endGame()
-  }
-  nextTurn()
-}
-
-const on21Click = function () {
-  gameArray = gameAPI.getGameBoard()
-  gameArray[2][1] = player[n % 2].symbol
-  apiArray = to1DArray(gameArray)
-  gameAPI.updateGameBoard(apiArray)
-  gameWinner = evaluate(gameArray)
-  if (gameWinner[0]) {
-    endGame()
-  }
-  nextTurn()
-}
-
-const on22Click = function () {
-  gameArray = gameAPI.getGameBoard()
-  gameArray[2][2] = player[n % 2].symbol
-  apiArray = to1DArray(gameArray)
-  gameAPI.updateGameBoard(apiArray)
-  gameWinner = evaluate(gameArray)
-  if (gameWinner[0]) {
-    endGame()
-  }
-  nextTurn()
-}
 const nextTurn = function () {
   n++
 }
@@ -159,22 +67,10 @@ const evaluate = function (player) {
   return winner
 }
 
-const to1DArray = function (arr) {
-  return arr[0].concat(arr[1].concat(arr[2]))
-}
-
 const endGame = function () {
   // add code for end of game
 }
 
 module.exports = {
-  on00Click,
-  on01Click,
-  on02Click,
-  on10Click,
-  on11Click,
-  on12Click,
-  on20Click,
-  on21Click,
-  on22Click
+  onClick
 }
