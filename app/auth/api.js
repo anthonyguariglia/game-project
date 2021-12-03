@@ -2,9 +2,10 @@
 const apiUrl = require('../config.js')
 
 const signUp = function (data) {
+  console.log(apiUrl)
   return $.ajax({
     method: 'POST',
-    url: apiUrl + '/sign-up',
+    url: apiUrl.apiUrl + '/sign-up',
     data
   })
 }
@@ -12,7 +13,7 @@ const signUp = function (data) {
 const signIn = function (data) {
   return $.ajax({
     method: 'POST',
-    url: apiUrl + '/sign-in',
+    url: apiUrl.apiUrl + '/sign-in',
     data
   })
 }
