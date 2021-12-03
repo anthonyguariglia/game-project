@@ -12,11 +12,11 @@ let gameArray =
 const player = [
   {
     name: 'Player 1',
-    symbol: 'x'
+    symbol: 'X'
   },
   {
     name: 'Player 2',
-    symbol: 'o'
+    symbol: 'O'
   }
 ]
 
@@ -32,10 +32,11 @@ const onNewGame = function () {
     ['', '', '']
   ]
   $('#0-0, #0-1, #0-2, #1-0, #1-1, #1-2, #2-0, #2-1, #2-2').text('')
+  gameWinner = [false, '']
 }
 
 const onClick = function (event) {
-  if (!gameWinner[0]) {
+  if (!gameWinner[0] && store.game._id) {
     event.preventDefault()
     // Pull 2D cell location from ID
     const positionIn2DArray = event.target.id
@@ -47,7 +48,7 @@ const onClick = function (event) {
       // Update game array with new player value
       gameArray[row][col] = player[n % 2].symbol
       // Update game board on screen
-      $(event.target).text(player[n % 2].symbol)
+      $(event.target).html(`<div class="symbol">${player[n % 2].symbol}</div>`)
 
       // check for winner
       gameWinner = evaluate()
