@@ -5,13 +5,123 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
 
       <!-- Do not add `link` tags-->
-      <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+      <!-- <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"> -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+      <link rel="stylesheet" type="text/css" href="app/styles/index.css" />
 
       <!-- Do not add `script` tags-->
-      <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
-      <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
+      <!-- <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script> -->
+      <!-- <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script> -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     </head>
     <body>
-      <h1>Browser Template</h1>
+
+      <header class="header">
+        <h1>TIC TAC TOE</h1>
+        <aside class="auth"> 
+          <p id="login">Log In!</p>
+        </aside>
+      </header>
+
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Log In
+      </button>
+      
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <!-- Add this to a modal within the login header -->
+              <h3>Sign Up</h3>
+              <form id="sign-up-form">
+                <input type="email" name="credentials[email]" placeholder="john@appleseed.com">
+                <input type="password" name="credentials[password]" placeholder="password">
+                <input type="password" name="credentials[password_confirmation" placeholder="confirm password">
+                <button type="submit">Submit</button>
+              </form>
+
+              <h3>Sign In</h3>
+              <form id="sign-in-form">
+                <input type="email" name="credentials[email]" placeholder="john@appleseed.com">
+                <input type="password" name="credentials[password]" placeholder="password">
+                <button type="submit">Submit</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<!-- Add this to a modal within the login header
+    <h3>Sign Up</h3>
+    <form id="sign-up-form">
+      <input type="email" name="credentials[email]" placeholder="john@appleseed.com">
+      <input type="password" name="credentials[password]" placeholder="password">
+      <input type="password" name="credentials[password_confirmation" placeholder="confirm password">
+      <button type="submit">Submit</button>
+    </form> -->
+
+    <p class="response-message"></p>
+
+    <!-- <h3>Sign In</h3>
+    <form id="sign-in-form">
+      <input type="email" name="credentials[email]" placeholder="john@appleseed.com">
+      <input type="password" name="credentials[password]" placeholder="password">
+      <button type="submit">Submit</button>
+    </form> -->
+
+    <button id="new-game">New Game!</button>
+
+      <div class="container">
+        <!-- <img src="public/tictactoe.png"> -->
+        <div class="row row-cols-3">
+          <div class="col-md-4 col-lg-4 box" id="0-0">
+            0-0
+          </div>
+          <div class="col-md-4 col-lg-4 box" id="0-1">
+            0-1
+          </div>
+          <div class="col-md-4 col-lg-4 box" id="0-2">
+            0-2
+          </div>
+
+        </div>
+
+        <div class="row  row-cols-3">
+          <div class="col-md-4 col-lg-4 box" id="1-0">
+            1-0
+          </div>
+          <div class="col-md-4 col-lg-4 box" id="1-1">
+            1-1
+          </div>
+          <div class="col-md-4 col-lg-4 box" id="1-2">
+            1-2
+          </div>
+        </div>
+
+
+        <div class="row  row-cols-3">
+          <div class="col-md-4 col-lg-4 box" id="2-0">
+            2-0
+          </div>
+          <div class="col-md-4 col-lg-4 box" id="2-1">
+            2-1
+          </div>
+          <div class="col-md-4 col-lg-4 box" id="2-2">
+            2-2
+          </div>
+        </div>
+      </div>
     </body>
 </html>

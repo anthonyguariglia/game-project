@@ -1,1 +1,26 @@
-@import '~bootstrap/scss/bootstrap';
+// @import '~bootstrap/scss/bootstrap';
+
+
+.box {
+  align-items: center;
+  background-color: white;
+  border: 1px solid black;
+  color: blue;
+  height: 125px;
+  width: 125px;
+  justify-content: center;
+}
+
+.container {
+    display: flex;
+    height: 400px;
+    width: 400px;
+    text-align: center;
+    font-size: 48px;
+}
+
+img {
+    width: 400px;
+    height: 400px;
+    position: absolute;
+}
