@@ -35,8 +35,14 @@ const onSignOut = function (event) {
     .catch(authUi.onSignOutFailure)
 }
 
+const onSignUpButton = function (event) {
+  event.preventDefault()
+  authApi.signUpButton()
+}
+
 module.exports = {
   onSignUp,
   onSignIn,
-  onSignOut
+  onSignOut,
+  onSignUpButton
 }

@@ -9,6 +9,7 @@ $(() => {
   // your JS code goes here
   $('#sign-up-form').on('submit', authEvents.onSignUp)
   $('#sign-in-form').on('submit', authEvents.onSignIn)
+  $('.sign-up-button').on('click', authEvents.onSignUpButton)
 
   $('#new-game').on('click', gameEvent.onNewGame)
 
