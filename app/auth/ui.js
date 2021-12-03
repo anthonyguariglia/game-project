@@ -22,9 +22,19 @@ const onSignInFailure = function () {
   $('.response-message').css('color', 'red')
 }
 
+const onSignOutSuccess = function () {
+  $('.response-message').text('Successfully Signed Out')
+}
+
+const onSignOutFailure = function () {
+  $('.response-message').text('Something went wrong...')
+}
+
 module.exports = {
   onSignUpSuccess,
   onSignUpFailure,
   onSignInSuccess,
-  onSignInFailure
+  onSignInFailure,
+  onSignOutSuccess,
+  onSignOutFailure
 }
