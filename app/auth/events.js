@@ -38,7 +38,8 @@ const onSignUpButton = function (event) {
   event.preventDefault()
   $('.modal-title').html('Sign Up')
   $('.modal-body')
-    .html(`<form id="sign-up-form" class="d-flex justify-content-center align-items-center flex-wrap">
+    .html(`<p class="signin-response-message d-flex justify-content-center"></p>
+    <form id="sign-up-form" class="d-flex justify-content-center align-items-center flex-wrap">
                 <input type="email" name="credentials[email]" placeholder="john@appleseed.com" class="input-group-lg input-sign-in m-1">
                 <input type="password" name="credentials[password]" placeholder="password" class="input-group-lg input-sign-in m-1">
                 <input type="password" name="credentials[password_confirmation" placeholder="confirm password" class="input-group-lg input-sign-in m-1">
@@ -57,10 +58,16 @@ const onSignInButton = function (event) {
   event.preventDefault()
   $('.modal-title').html('Sign In')
   $('.modal-body')
-    .html(`<form id="sign-in-form" class="d-flex justify-content-center align-items-center">
+    .html(`<p class="signin-response-message d-flex justify-content-center"></p>
+    <form id="sign-in-form" class="d-flex justify-content-center align-items-center">
                 <input type="email" name="credentials[email]" placeholder="john@appleseed.com" class="input-group-lg input-sign-in mx-1">
                 <input type="password" name="credentials[password]" placeholder="password" class="input-group-lg input-sign-in mx-1">
                 <button type="submit" class="sign-in-button btn btn-success btn-sm mx-1">Submit</button>
+              </form>
+              <form id="sign-out-form">
+                <div class="d-grid gap-2 col-8 mx-auto">
+                  <button type="submit" class="sign-out-button btn btn-success btn-sm col">Sign Out</button>
+                </div>
               </form>
               <br>
               <div class="d-grid gap-2 col-8 mx-auto">
@@ -69,6 +76,7 @@ const onSignInButton = function (event) {
               </div>`)
   $('#sign-in-form').on('submit', onSignIn)
   $('.sign-up-button').on('click', onSignUpButton)
+  $('#sign-out-form').on('submit', onSignOut)
 }
 
 module.exports = {
