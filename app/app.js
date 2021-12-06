@@ -10,16 +10,7 @@ $(() => {
   $('#sign-up-form').on('submit', authEvents.onSignUp)
   $('#sign-in-form').on('submit', authEvents.onSignIn)
   $('.sign-up-button').on('click', authEvents.onSignUpButton)
+  $('.sign-out-button').on('click', authEvents.onSignOut)
 
   $('#new-game').on('click', gameEvent.onNewGame)
-
-  $('#0-0').on('click', gameEvent.onClick)
-  $('#0-1').on('click', gameEvent.onClick)
-  $('#0-2').on('click', gameEvent.onClick)
-  $('#1-0').on('click', gameEvent.onClick)
-  $('#1-1').on('click', gameEvent.onClick)
-  $('#1-2').on('click', gameEvent.onClick)
-  $('#2-0').on('click', gameEvent.onClick)
-  $('#2-1').on('click', gameEvent.onClick)
-  $('#2-2').on('click', gameEvent.onClick)
 })
