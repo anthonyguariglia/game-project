@@ -28,19 +28,13 @@ const signOut = function (data) {
   })
 }
 
-const signUpButton = function () {
-  $('.modal-body').html(`<h3>Sign Up</h3>
-              <form id="sign-up-form">
-                <input type="email" name="credentials[email]" placeholder="john@appleseed.com">
-                <input type="password" name="credentials[password]" placeholder="password">
-                <input type="password" name="credentials[password_confirmation" placeholder="confirm password">
-                <button type="submit">Submit</button>
-              </form>`)
+const signInButton = function () {
+
 }
 
 module.exports = {
   signUp,
   signIn,
   signOut,
-  signUpButton
+  signInButton
 }
