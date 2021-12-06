@@ -11,117 +11,148 @@
       <link rel="stylesheet" type="text/css" href="app/styles/index.css" />
 
       <!-- Do not add `script` tags-->
-      <!-- <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script> -->
-      <!-- <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script> -->
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+      <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
+      <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
     </head>
+    <style> 
+    
+    .row-cols-3 {
+      width: 510px;
+    }
+    .game-box {
+      width: 170px;
+      height: 170px;
+    }
+    .symbol {
+      font-size: 170px;
+      padding: auto;
+      width: 170px;
+      height: 170px;
+      text-align: center;
+      vertical-align: middle;
+      line-height: 170px;
+    }
+    .sign-in-button {
+      height: 35px;
+      width: 70px;
+    }
+
+    .input-sign-in {
+      height: 35px;
+      width: 180px;
+    }
+
+    .choose-symbol {
+      display: inline;
+    }
+    .choose-symbol:hover {
+      color: grey;
+    }
+    #new-game, #play-again {
+      height: 60px;
+      width: 200px;
+      font-size: 30px;
+      color: black;
+      background-color: #dfffdf;
+      border: 4px solid #98e698;
+      text-align: center;
+      display: none;
+    }
+    #new-game:hover {
+      background-color: white;
+    }
+    #game-text {
+      text-align: center;
+    }
+    .game-board {
+      margin: 0px;
+      max-height: 50%;
+    }
+   #sign-out-form {
+     display: none;
+   }
+    </style>
     <body>
 
       <header class="header">
-        <h1>TIC TAC TOE</h1>
-        <aside class="auth"> 
-          <p id="login">Log In!</p>
-        </aside>
-      </header>
+        <h1 style="text-align: center; background: #98e698; font-size: 50px; padding: 10px;">TIC TAC TOE</h1>
 
-      <!-- Button trigger modal -->
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Log In
-      </button>
+        <!-- Button trigger modal -->
+        <button type="button" class="login btn btn-primary end-10 position-absolute top-0 end-0" data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-top: 20px; margin-right: 20px; background: #dfffdf; color: black; border-color: black;">
+          Log In
+        </button>
       
+
+      </header>
       <!-- Modal -->
       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Sign In</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <!-- Add this to a modal within the login header -->
-              <h3>Sign Up</h3>
-              <form id="sign-up-form">
-                <input type="email" name="credentials[email]" placeholder="john@appleseed.com">
-                <input type="password" name="credentials[password]" placeholder="password">
-                <input type="password" name="credentials[password_confirmation" placeholder="confirm password">
-                <button type="submit">Submit</button>
-              </form>
 
-              <h3>Sign In</h3>
-              <form id="sign-in-form">
-                <input type="email" name="credentials[email]" placeholder="john@appleseed.com">
-                <input type="password" name="credentials[password]" placeholder="password">
-                <button type="submit">Submit</button>
+              <p class="signin-response-message d-flex justify-content-center"></p>
+              <form id="sign-in-form" class="d-flex justify-content-center align-items-center">
+                <input type="email" name="credentials[email]" placeholder="john@appleseed.com" class="input-group-lg input-sign-in mx-1">
+                <input type="password" name="credentials[password]" placeholder="password" class="input-group-lg input-sign-in mx-1">
+                <button type="submit" class="sign-in-button btn btn-success btn-sm mx-1">Submit</button>
               </form>
+              <form id="sign-out-form">
+                <div class="d-grid gap-2 col-8 mx-auto">
+                  <button type="submit" class="sign-out-button btn btn-success btn-sm col">Sign Out</button>
+                </div>
+              </form>
+              <br>
+              <div class="d-grid gap-2 col-8 mx-auto">
+                  <button class="sign-up-button btn btn-dark col">Don't have an account? Sign up here!</button>
+                  <div class="col"></div>
+              </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
             </div>
           </div>
         </div>
       </div>
 
-<!-- Add this to a modal within the login header
-    <h3>Sign Up</h3>
-    <form id="sign-up-form">
-      <input type="email" name="credentials[email]" placeholder="john@appleseed.com">
-      <input type="password" name="credentials[password]" placeholder="password">
-      <input type="password" name="credentials[password_confirmation" placeholder="confirm password">
-      <button type="submit">Submit</button>
-    </form> -->
-
     <p class="response-message"></p>
 
-    <!-- <h3>Sign In</h3>
-    <form id="sign-in-form">
-      <input type="email" name="credentials[email]" placeholder="john@appleseed.com">
-      <input type="password" name="credentials[password]" placeholder="password">
-      <button type="submit">Submit</button>
-    </form> -->
-
-    <button id="new-game">New Game!</button>
-
-      <div class="container">
-        <!-- <img src="public/tictactoe.png"> -->
-        <div class="row row-cols-3">
-          <div class="col-md-4 col-lg-4 box" id="0-0">
-            0-0
+    <h2 id="game-text">SIGN IN TO PLAY</h2>
+    
+    <section class="game-window d-flex justify-content-center align-items-center">
+      <div class="container d-flex justify-content-center align-content-center game-board">
+        <div class="row row-cols-3 gx-5 text-center">
+          <div class="col game-box px-0 border border-start-0 border-top-0 border-2 border-dark" id="0-0">
           </div>
-          <div class="col-md-4 col-lg-4 box" id="0-1">
-            0-1
+          <div class="col game-box px-0 border border-top-0 border-2 border-dark" id="0-1">
           </div>
-          <div class="col-md-4 col-lg-4 box" id="0-2">
-            0-2
+          <div class="col game-box px-0 border border-top-0 border-end-0 border-2 border-dark" id="0-2">
           </div>
-
-        </div>
-
-        <div class="row  row-cols-3">
-          <div class="col-md-4 col-lg-4 box" id="1-0">
-            1-0
+          <div class="col game-box px-0 border border-start-0 border-2 border-dark" id="1-0">
           </div>
-          <div class="col-md-4 col-lg-4 box" id="1-1">
-            1-1
+          <div class="col game-box px-0 border border-2 border-dark" id="1-1">
           </div>
-          <div class="col-md-4 col-lg-4 box" id="1-2">
-            1-2
+          <div class="col game-box px-0 border border-end-0 border-2 border-dark" id="1-2">
           </div>
-        </div>
-
-
-        <div class="row  row-cols-3">
-          <div class="col-md-4 col-lg-4 box" id="2-0">
-            2-0
+          <div class="col game-box px-0 border border-start-0 border-bottom-0 border-2 border-dark" id="2-0">
           </div>
-          <div class="col-md-4 col-lg-4 box" id="2-1">
-            2-1
+          <div class="col game-box px-0 border border-bottom-0 border-2 border-dark" id="2-1">
           </div>
-          <div class="col-md-4 col-lg-4 box" id="2-2">
-            2-2
+          <div class="col game-box px-0 border border-end-0 border-bottom-0 border-2 border-dark" id="2-2">
           </div>
         </div>
       </div>
+    </section>
+    <section>
+      <section class="new-game container d-flex justify-content-center align-items-center">
+        <button class="btn btn-success" id="new-game">NEW GAME</button>
+      </section>
+    </section>
+
+
     </body>
 </html>

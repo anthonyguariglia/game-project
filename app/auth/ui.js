@@ -1,4 +1,6 @@
 'use strict'
+const Modal = require('bootstrap').Modal
+const myModal = new Modal($('#exampleModal'))
 
 const store = require('../store.js')
 
@@ -23,6 +25,7 @@ const onSignInSuccess = function (response) {
   $('#sign-out-form').css('display', 'unset')
   $('#game-text').html('')
   $('#new-game').css('display', 'unset')
+  myModal.toggle()
 }
 
 const onSignInFailure = function () {
@@ -67,6 +70,8 @@ const onSignOutSuccess = function () {
         </div> 
     </section>
         `)
+
+  myModal.toggle()
 }
 
 const onSignOutFailure = function () {
