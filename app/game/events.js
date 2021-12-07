@@ -9,12 +9,6 @@ let gameArray =
       ['', '', ''],
       ['', '', '']]
 
-// const compArray = [
-//   ['', '', ''],
-//   ['', '', ''],
-//   ['', '', '']
-// ]
-
 const x = 'X'
 const o = 'O'
 
@@ -67,13 +61,6 @@ const onNewGame = function (event) {
   $('.new-game').html('')
 }
 
-/* <div id="game-text" class="fs-1 ">
-          <strong>PLAYER 1, CHOOSE YOUR SYMBOL!</strong><div id="choose-symbol" class="d-flex justify-content-center align-items-center">
-            <div id="choose-x" class="game-box symbol choose-symbol">${x}</div>
-            <div id="choose-o" class="game-box symbol choose-symbol">${o}</div>
-          </div>
-      </div> */
-
 const chooseOpponent = function (event) {
   player[0].opponent = event.target.title
   $('.game-window').html(`<div id="game-text" class="fs-1 ">
@@ -84,11 +71,9 @@ const chooseOpponent = function (event) {
       </div>`)
   $('#choose-x').on('click', chooseSymbol)
   $('#choose-o').on('click', chooseSymbol)
-  console.log(event.target.title)
 }
 
 const chooseSymbol = function (event) {
-  console.log('chose a symbol')
   player[0].symbol = $(event.target).text()
   if (player[0].symbol === o) {
     player[1].symbol = x
@@ -138,7 +123,6 @@ const chooseSymbol = function (event) {
   $('#2-1').on('click', onClick)
   $('#2-2').on('click', onClick)
 
-  console.log(player)
 }
 
 const onClick = function (event) {
@@ -146,10 +130,8 @@ const onClick = function (event) {
     event.preventDefault()
     // Pull 2D cell location from ID
     const positionIn2DArray = event.target.id
-    console.log(event.target)
     const row = parseInt(positionIn2DArray.split('-')[0])
     const col = parseInt(positionIn2DArray.split('-')[1])
-    console.log(gameArray[row][col])
     if (gameArray[row][col] === '') {
       // Update game array with new player value
       gameArray[row][col] = player[n % 2].symbol
@@ -163,16 +145,15 @@ const onClick = function (event) {
       // Update API with new board values
       gameAPI.updateGameBoard(cell, player[n % 2].symbol, gameWinner[0], store.game._id)
         .then(gameUI.onUpdateBoardSuccess)
+        .then(logComputerChoice)
         .catch(gameUI.onUpdateBoardFailure)
 
-      console.log(store.game.over, store.game.__v)
       if (gameWinner[0]) {
         endGame(gameWinner)
       } else if (!store.game.over && store.game.__v === 8) {
         tieGame()
-      } else {
+      } else if (n % 2 === 0) {
         const nextPlayer = player[(n + 1) % 2].playerNumber
-        console.log(nextPlayer, n)
         $('#game-text').hide()
         $('#game-text').html(`PLAYER ${nextPlayer}, YOUR TURN`)
         $('#game-text').fadeIn()
@@ -184,13 +165,11 @@ const onClick = function (event) {
   }
 }
 
-const nextTurn = function () {
-  n++
-  if (player[0].opponent === 'computer' && (n % 2) === 1) {
-    const computerChoice = findBestMove(gameArray)
-    console.log('findBestMove output: ', computerChoice)
-    const row = computerChoice.row
-    const col = computerChoice.col
+function logComputerChoice () {
+  if (player[0].opponent === 'computer' && n % 2 === 1) {
+    const aiChoice = findBestMove(getBoard(gameArray))
+    const row = aiChoice.row
+    const col = aiChoice.col
 
     gameArray[row][col] = player[1].symbol
     // Update game board on screen
@@ -199,15 +178,17 @@ const nextTurn = function () {
     $(`#${row}-${col}`).fadeIn(250)
     // Compute 1D array cell value for API
     const cell = 3 * row + col
-    console.log('cell: ' + cell)
     // Update API with new board values
-    console.log(
-      'cell: ' + cell,
-      'symbol: ' + player[n % 2].symbol,
-      'game over? ' + gameWinner[0]
-      , 'game ID: ' + store.game._id)
-
-    // check for winner
+    gameAPI
+      .updateGameBoard(
+        cell,
+        player[n % 2].symbol,
+        gameWinner[0],
+        store.game._id
+      )
+      .then(gameUI.onUpdateBoardSuccess)
+      .catch(gameUI.onUpdateBoardFailure)
+      // check for winner
     gameWinner = evaluate()
     if (gameWinner[0]) {
       endGame(gameWinner)
@@ -215,27 +196,35 @@ const nextTurn = function () {
       tieGame()
     } else {
       const nextPlayer = player[(n + 1) % 2].playerNumber
-      console.log(nextPlayer, n)
       $('#game-text').html(`PLAYER ${nextPlayer}, YOUR TURN`)
       $('#game-text').fadeIn()
-    }
 
-    gameAPI.updateGameBoard(cell, player[n % 2].symbol, gameWinner[0], store.game._id)
-      .then(gameUI.onUpdateBoardSuccess)
-      .catch(gameUI.onUpdateBoardFailure)
-    n++
+      // increment turn
+      nextTurn()
+    }
   }
 }
 
-// const computeMove = function () {
-//   const bestMove = findBestMove(gameArray)
-//   return bestMove
-// }
+const getBoard = function (board) {
+  return [...board]
+}
+
+const nextTurn = function () {
+  n++
+}
+
+function isMovesLeft (board) {
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+      if (board[i][j] === '') { return true }
+    }
+  }
+
+  return false
+}
 
 function minimax (board, depth, isMax) {
-  const score = evaluateAI(gameArray)
-  //   console.log(score)
-  //   console.log('score: ' + score)
+  const score = evaluateAI(board)
   // If Maximizer has won the game
   // return his/her evaluated score
   if (score === 10) {
@@ -248,7 +237,7 @@ function minimax (board, depth, isMax) {
   }
   // If there are no more moves and
   // no winner then it is a tie
-  if (store.game.over) {
+  if (!isMovesLeft(board)) {
     return 0
   }
   // If this maximizer's move
@@ -265,7 +254,6 @@ function minimax (board, depth, isMax) {
           // Call minimax recursively
           // and choose the maximum value
           best = Math.max(best, minimax(board, depth + 1, !isMax))
-          //   console.log('minmax best : ' + best)
           // Undo the move
           board[i][j] = ''
         }
@@ -329,7 +317,6 @@ function findBestMove (board) {
         // If the value of the current move
         // is more than the best value, then
         // update best
-        console.log('row: ' + i, 'col: ' + j, moveVal, bestVal)
         if (moveVal > bestVal) {
           bestMove.row = i
           bestMove.col = j
@@ -338,8 +325,6 @@ function findBestMove (board) {
       }
     }
   }
-
-  console.log('The value of the best Move ' + 'is : ', bestVal + '<br><br>')
 
   return bestMove
 }
