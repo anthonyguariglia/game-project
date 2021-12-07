@@ -35,7 +35,11 @@ Once an account is created, they can navigate back to the sign-in page to sign i
 
 Upon successful sign-in, a button will appear that allows them to start a new game.
 
-Selecting 'NEW GAME' will prompt them to select their symbol, choosing between X and O. 
+Selecting 'NEW GAME' will prompt them to select their opponent, either player or computer as displayed by the two icons.
+
+If the player is selected, they will be prompted to select a symbol, choosing between X and O. 
+
+If the computer is selected, they will have the option to choose between an easy and a hard difficulty, as represented by the smiling and frowning face, respectively. Once selected, they will be directed to the same symbol selection screen to choose between X and O.
 
 Once a piece is selected, the game board will appear and the user will be able to select their desired square. Selection of the square will populate that space with their symbol.
 
