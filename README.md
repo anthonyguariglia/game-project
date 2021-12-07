@@ -50,3 +50,6 @@ Upon completion of the game, a button will appear at the bottom of the screen to
 Once finished, the user may click on the icon at the top-right corner of the screen that displays their email and select 'sign out'. They will receive a message validating the success of that operation and may sign back in at any point after.
 
 ### Link to Deployed Project
+```html
+<a href="https://anthonyguariglia.github.io/anthonyguariglia_tic-tac-toe">Tony's Tic Tac Toe</a>
+```
