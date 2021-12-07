@@ -9,14 +9,24 @@ let gameArray =
       ['', '', ''],
       ['', '', '']]
 
+// const compArray = [
+//   ['', '', ''],
+//   ['', '', ''],
+//   ['', '', '']
+// ]
+
 const x = 'X'
 const o = 'O'
+
+const playHTML = '<img src="https://i.imgur.com/4RI44bT.png" title="player" style="height: 170px;" />'
+const compHTML = '<img src="https://i.imgur.com/iN79bav.png" title="computer" style="height: 170px;" />'
 
 const player = [
   {
     name: 'PLAYER 1',
     symbol: x,
-    playerNumber: 1
+    playerNumber: 1,
+    opponent: 'player'
   },
   {
     name: 'PLAYER 2',
@@ -38,23 +48,43 @@ const onNewGame = function (event) {
     ['', '', '']
   ]
   $('#0-0, #0-1, #0-2, #1-0, #1-1, #1-2, #2-0, #2-1, #2-2').text('')
-  gameWinner = [false, '']
+  gameWinner = [false, '', 0]
   n = 0
 
   $('#new-game').fadeOut(500)
   $('.game-window').hide()
   $('.game-window').html(`
       <div id="game-text" class="fs-1 ">
-          <strong>PLAYER 1, CHOOSE YOUR SYMBOL!</strong><div id="choose-symbol" class="d-flex justify-content-center align-items-center">
-            <div id="choose-x" class="game-box symbol choose-symbol">${x}</div>
-            <div id="choose-o" class="game-box symbol choose-symbol">${o}</div>
+          <strong>PLAYER 1, CHOOSE YOUR OPPONENT!</strong><div id="choose-opp" class="d-flex justify-content-center align-items-center">
+            <div id="player" class="game-box symbol choose-symbol mx-2">${playHTML}</div>
+            <div id="computer" class="game-box symbol choose-symbol mx-2">${compHTML}</div>
           </div>
       </div>`)
   $('#game-text').html('')
   $('.game-window').fadeIn(500)
+  $('#player').on('click', chooseOpponent)
+  $('#computer').on('click', chooseOpponent)
+  $('.new-game').html('')
+}
+
+/* <div id="game-text" class="fs-1 ">
+          <strong>PLAYER 1, CHOOSE YOUR SYMBOL!</strong><div id="choose-symbol" class="d-flex justify-content-center align-items-center">
+            <div id="choose-x" class="game-box symbol choose-symbol">${x}</div>
+            <div id="choose-o" class="game-box symbol choose-symbol">${o}</div>
+          </div>
+      </div> */
+
+const chooseOpponent = function (event) {
+  player[0].opponent = event.target.title
+  $('.game-window').html(`<div id="game-text" class="fs-1 ">
+          <strong>PLAYER 1, CHOOSE YOUR SYMBOL!</strong><div id="choose-symbol" class="d-flex justify-content-center align-items-center">
+            <div id="choose-x" class="game-box symbol choose-opp">${x}</div>
+            <div id="choose-o" class="game-box symbol choose-opp">${o}</div>
+          </div>
+      </div>`)
   $('#choose-x').on('click', chooseSymbol)
   $('#choose-o').on('click', chooseSymbol)
-  $('.new-game').html('')
+  console.log(event.target.title)
 }
 
 const chooseSymbol = function (event) {
@@ -127,7 +157,7 @@ const onClick = function (event) {
       $(event.target).html(`<div class="symbol">${player[n % 2].symbol}</div>`)
 
       // check for winner
-      gameWinner = evaluate(row, col)
+      gameWinner = evaluate()
       // Compute 1D array cell value for API
       const cell = 3 * row + col
       // Update API with new board values
@@ -146,25 +176,232 @@ const onClick = function (event) {
         $('#game-text').hide()
         $('#game-text').html(`PLAYER ${nextPlayer}, YOUR TURN`)
         $('#game-text').fadeIn()
+
+        // increment turn
+        nextTurn()
       }
-      // increment turn
-      nextTurn()
     }
   }
 }
 
 const nextTurn = function () {
   n++
+  if (player[0].opponent === 'computer' && (n % 2) === 1) {
+    const computerChoice = findBestMove(gameArray)
+    console.log('findBestMove output: ', computerChoice)
+    const row = computerChoice.row
+    const col = computerChoice.col
+
+    gameArray[row][col] = player[1].symbol
+    // Update game board on screen
+    $(`#${row}-${col}`).hide()
+    $(`#${row}-${col}`).html(`<div class="symbol">${player[n % 2].symbol}</div>`)
+    $(`#${row}-${col}`).fadeIn(250)
+    // Compute 1D array cell value for API
+    const cell = 3 * row + col
+    console.log('cell: ' + cell)
+    // Update API with new board values
+    console.log(
+      'cell: ' + cell,
+      'symbol: ' + player[n % 2].symbol,
+      'game over? ' + gameWinner[0]
+      , 'game ID: ' + store.game._id)
+
+    // check for winner
+    gameWinner = evaluate()
+    if (gameWinner[0]) {
+      endGame(gameWinner)
+    } else if (!store.game.over && store.game.__v === 8) {
+      tieGame()
+    } else {
+      const nextPlayer = player[(n + 1) % 2].playerNumber
+      console.log(nextPlayer, n)
+      $('#game-text').html(`PLAYER ${nextPlayer}, YOUR TURN`)
+      $('#game-text').fadeIn()
+    }
+
+    gameAPI.updateGameBoard(cell, player[n % 2].symbol, gameWinner[0], store.game._id)
+      .then(gameUI.onUpdateBoardSuccess)
+      .catch(gameUI.onUpdateBoardFailure)
+    n++
+  }
 }
 
-const evaluate = function (a, b) {
+// const computeMove = function () {
+//   const bestMove = findBestMove(gameArray)
+//   return bestMove
+// }
+
+function minimax (board, depth, isMax) {
+  const score = evaluateAI(gameArray)
+  //   console.log(score)
+  //   console.log('score: ' + score)
+  // If Maximizer has won the game
+  // return his/her evaluated score
+  if (score === 10) {
+    return score - depth
+  }
+  // If Minimizer has won the game
+  // return his/her evaluated score
+  if (score === -10) {
+    return score + depth
+  }
+  // If there are no more moves and
+  // no winner then it is a tie
+  if (store.game.over) {
+    return 0
+  }
+  // If this maximizer's move
+  if (isMax) {
+    let best = -1000
+
+    // Traverse all cells
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        // Check if cell is empty
+        if (board[i][j] === '') {
+          // Make the move
+          board[i][j] = player[1].symbol
+          // Call minimax recursively
+          // and choose the maximum value
+          best = Math.max(best, minimax(board, depth + 1, !isMax))
+          //   console.log('minmax best : ' + best)
+          // Undo the move
+          board[i][j] = ''
+        }
+      }
+    }
+    return best
+  } else {
+    let best = 1000
+
+    // Traverse all cells
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        // Check if cell is empty
+        if (board[i][j] === '') {
+          // Make the move
+          board[i][j] = player[0].symbol
+          // Call minimax recursively and
+          // choose the minimum value
+          best = Math.min(best, minimax(board, depth + 1, !isMax))
+
+          // Undo the move
+          board[i][j] = ''
+        }
+      }
+    }
+    return best
+  }
+}
+
+class Move {
+  constructor () {
+    // eslint-disable-next-line no-unused-vars
+    let row, col
+  }
+}
+
+function findBestMove (board) {
+  let bestVal = -1000
+  const bestMove = new Move()
+  bestMove.row = -1
+  bestMove.col = -1
+
+  // Traverse all cells, evaluate
+  // minimax function for all empty
+  // cells. And return the cell
+  // with optimal value.
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+      // Check if cell is empty
+      if (board[i][j] === '') {
+        // Make the move
+        board[i][j] = player[1].symbol
+
+        // compute evaluation function
+        // for this move.
+        const moveVal = minimax(board, 0, false)
+
+        // Undo the move
+        board[i][j] = ''
+
+        // If the value of the current move
+        // is more than the best value, then
+        // update best
+        console.log('row: ' + i, 'col: ' + j, moveVal, bestVal)
+        if (moveVal > bestVal) {
+          bestMove.row = i
+          bestMove.col = j
+          bestVal = moveVal
+        }
+      }
+    }
+  }
+
+  console.log('The value of the best Move ' + 'is : ', bestVal + '<br><br>')
+
+  return bestMove
+}
+
+const evaluateAI = function (b) {
+  // Checking for Rows for X or O victory.
+  for (let row = 0; row < 3; row++) {
+    if (b[row][0] === b[row][1] && b[row][1] === b[row][2]) {
+      if (b[row][0] === player[1].symbol) {
+        return +10
+      } else if (b[row][0] === player[0].symbol) {
+        return -10
+      }
+    }
+  }
+
+  // Checking for Columns for X or O victory.
+  for (let col = 0; col < 3; col++) {
+    if (b[0][col] === b[1][col] && b[1][col] === b[2][col]) {
+      if (b[0][col] === player[1].symbol) {
+        return +10
+      } else if (b[0][col] === player[0].symbol) {
+        return -10
+      }
+    }
+  }
+
+  // Checking for Diagonals for X or O victory.
+  if (b[0][0] === b[1][1] && b[1][1] === b[2][2]) {
+    if (b[0][0] === player[1].symbol) {
+      return +10
+    } else if (b[0][0] === player[0].symbol) {
+      return -10
+    }
+  }
+
+  if (b[0][2] === b[1][1] && b[1][1] === b[2][0]) {
+    if (b[0][2] === player[1].symbol) {
+      return +10
+    } else if (b[0][2] === player[0].symbol) {
+      return -10
+    }
+  }
+
+  // Else if none of them have
+  // won then return 0
+  return 0
+}
+
+const evaluate = function () {
   let winner = [false, '']
   for (let row = 0; row < 3; row++) {
     if (gameArray[row][0]) {
       if (
         gameArray[row][0] === gameArray[row][1] && gameArray[row][1] === gameArray[row][2]
       ) {
-        winner = [true, player[n % 2].name]
+        if (gameArray[row][0] === player[0].symbol) {
+          winner = [true, player[n % 2].name, -10]
+        } else if (gameArray[row][0] === player[1].symbol) {
+          winner = [true, player[n % 2].name, 10]
+        }
+
         $(`#${row}-${0}`).css('color', '#98e698')
         $(`#${row}-${1}`).css('color', '#98e698')
         $(`#${row}-${2}`).css('color', '#98e698')
@@ -175,7 +412,11 @@ const evaluate = function (a, b) {
     if (gameArray[0][col]) {
       if (
         gameArray[0][col] === gameArray[1][col] && gameArray[1][col] === gameArray[2][col]) {
-        winner = [true, player[n % 2].name]
+        if (gameArray[0][col] === player[0].symbol) {
+          winner = [true, player[n % 2].name, -10]
+        } else if (gameArray[0][col] === player[1].symbol) {
+          winner = [true, player[n % 2].name, 10]
+        }
         $(`#${0}-${col}`).css('color', '#98e698')
         $(`#${1}-${col}`).css('color', '#98e698')
         $(`#${2}-${col}`).css('color', '#98e698')
@@ -184,7 +425,11 @@ const evaluate = function (a, b) {
   }
   if (gameArray[0][0]) {
     if (gameArray[0][0] === gameArray[1][1] && gameArray[1][1] === gameArray[2][2]) {
-      winner = [true, player[n % 2].name]
+      if (gameArray[0][0] === player[0].symbol) {
+        winner = [true, player[n % 2].name, -10]
+      } else if (gameArray[0][0] === player[1].symbol) {
+        winner = [true, player[n % 2].name, 10]
+      }
       $(`#${0}-${0}`).css('color', '#98e698')
       $(`#${1}-${1}`).css('color', '#98e698')
       $(`#${2}-${2}`).css('color', '#98e698')
@@ -192,7 +437,11 @@ const evaluate = function (a, b) {
   }
   if (gameArray[0][2]) {
     if (gameArray[0][2] === gameArray[1][1] && gameArray[1][1] === gameArray[2][0]) {
-      winner = [true, player[n % 2].name]
+      if (gameArray[0][2] === player[0].symbol) {
+        winner = [true, player[n % 2].name, -10]
+      } else if (gameArray[0][2] === player[1].symbol) {
+        winner = [true, player[n % 2].name, 10]
+      }
       $(`#${0}-${2}`).css('color', '#98e698')
       $(`#${1}-${1}`).css('color', '#98e698')
       $(`#${2}-${0}`).css('color', '#98e698')
