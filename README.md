@@ -22,10 +22,10 @@ See a clean, bug-free UI that is responsive to in-game changes
 
 #### WireFrames of App UI
 
-[Home Screen]("/public/HOME-SCREEN.jpg")
-[Select Symbol]("/public/SELECT-SYMBOL.jpg")
-[1st Turn]("/public/1ST-TURN.jpg")
-[Play Again]("/public/PLAY-AGAIN.jpg")
+![Home Screen](/public/HOME-SCREEN.jpg)
+![Select Symbol](/public/SELECT-SYMBOL.jpg)
+![1st Turn](/public/1ST-TURN.jpg)
+![Play Again](/public/PLAY-AGAIN.jpg)
 
 ### Game Flow
 
