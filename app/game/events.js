@@ -15,12 +15,16 @@ const o = 'O'
 const playHTML = '<img src="https://i.imgur.com/4RI44bT.png" title="player" style="height: 170px;" />'
 const compHTML = '<img src="https://i.imgur.com/iN79bav.png" title="computer" style="height: 170px;" />'
 
+const easyHTML = '<img src="https://i.imgur.com/ezAhqaM.png" title="easy" style="height: 170px;" />'
+const diffHTML = '<img src="https://i.imgur.com/o7ghFJH.png" title="hard" style="height: 170px;" />'
+
 const player = [
   {
     name: 'PLAYER 1',
     symbol: x,
     playerNumber: 1,
-    opponent: 'player'
+    opponent: 'player',
+    hardDifficulty: false
   },
   {
     name: 'PLAYER 2',
@@ -63,6 +67,34 @@ const onNewGame = function (event) {
 
 const chooseOpponent = function (event) {
   player[0].opponent = event.target.title
+  if (player[0].opponent === 'computer') {
+    $('.game-window').html(`<div id="game-text" class="fs-1 ">
+            <strong>PLAYER 1, CHOOSE DIFFICULTY!</strong><div id="choose-symbol" class="d-flex justify-content-center align-items-center">
+                <div id="difficulty-easy" class="game-box symbol choose-opp">${easyHTML}</div>
+                <div id="difficulty-hard" class="game-box symbol choose-opp">${diffHTML}</div>
+            </div>
+        </div>`)
+    $('#difficulty-easy').on('click', chooseDifficulty)
+    $('#difficulty-hard').on('click', chooseDifficulty)
+  } else {
+    $('.game-window').html(`<div id="game-text" class="fs-1 ">
+          <strong>PLAYER 1, CHOOSE YOUR SYMBOL!</strong><div id="choose-symbol" class="d-flex justify-content-center align-items-center">
+            <div id="choose-x" class="game-box symbol choose-opp">${x}</div>
+            <div id="choose-o" class="game-box symbol choose-opp">${o}</div>
+          </div>
+      </div>`)
+    $('#choose-x').on('click', chooseSymbol)
+    $('#choose-o').on('click', chooseSymbol)
+  }
+}
+
+const chooseDifficulty = function (event) {
+  const difficulty = event.target.title
+  if (difficulty === 'hard') {
+    player[0].hardDifficulty = true
+  } else {
+    player[0].hardDifficulty = false
+  }
   $('.game-window').html(`<div id="game-text" class="fs-1 ">
           <strong>PLAYER 1, CHOOSE YOUR SYMBOL!</strong><div id="choose-symbol" class="d-flex justify-content-center align-items-center">
             <div id="choose-x" class="game-box symbol choose-opp">${x}</div>
@@ -122,7 +154,6 @@ const chooseSymbol = function (event) {
   $('#2-0').on('click', onClick)
   $('#2-1').on('click', onClick)
   $('#2-2').on('click', onClick)
-
 }
 
 const onClick = function (event) {
@@ -158,6 +189,9 @@ const onClick = function (event) {
         $('#game-text').html(`PLAYER ${nextPlayer}, YOUR TURN`)
         $('#game-text').fadeIn()
 
+        // increment turn
+        nextTurn()
+      } else {
         // increment turn
         nextTurn()
       }
@@ -237,7 +271,7 @@ function minimax (board, depth, isMax) {
   }
   // If there are no more moves and
   // no winner then it is a tie
-  if (!isMovesLeft(board)) {
+  if (player[0].hardDifficulty ? !isMovesLeft(board) : store.game.over) {
     return 0
   }
   // If this maximizer's move
