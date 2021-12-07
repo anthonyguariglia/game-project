@@ -5,12 +5,12 @@ const myModal = new Modal($('#exampleModal'))
 const store = require('../store.js')
 
 const onSignUpSuccess = function () {
-  $('signin-response-message').text('Successfully Signed Up')
+  $('.signin-response-message').text('Successfully Signed Up')
   $('form').trigger('reset')
 }
 
 const onSignUpFailure = function () {
-  $('.response-message').text('Failed to Sign Up')
+  $('.signin-response-message').text('Failed to Sign Up')
 }
 
 const onSignInSuccess = function (response) {
