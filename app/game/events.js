@@ -15,8 +15,8 @@ const o = 'O'
 const playHTML = '<img src="https://i.imgur.com/4RI44bT.png" title="player" style="height: 170px;" />'
 const compHTML = '<img src="https://i.imgur.com/iN79bav.png" title="computer" style="height: 170px;" />'
 
-const easyHTML = '<img src="https://i.imgur.com/ezAhqaM.png" title="easy" style="height: 170px;" />'
-const diffHTML = '<img src="https://i.imgur.com/o7ghFJH.png" title="hard" style="height: 170px;" />'
+const easyHTML = '<img src="https://i.imgur.com/ezAhqaM.png" class="difficulty" title="easy" style="height: 165px;" />'
+const diffHTML = '<img src="https://i.imgur.com/o7ghFJH.png" class="difficulty" title="hard" style="height: 170px;" />'
 
 const player = [
   {
@@ -70,8 +70,8 @@ const chooseOpponent = function (event) {
   if (player[0].opponent === 'computer') {
     $('.game-window').html(`<div id="game-text" class="fs-1 ">
             <strong>PLAYER 1, CHOOSE DIFFICULTY!</strong><div id="choose-symbol" class="d-flex justify-content-center align-items-center">
-                <div id="difficulty-easy" class="game-box symbol choose-opp">${easyHTML}</div>
-                <div id="difficulty-hard" class="game-box symbol choose-opp">${diffHTML}</div>
+                <div id="difficulty-easy" class="game-box symbol choose-opp mx-4">${easyHTML}</div>
+                <div id="difficulty-hard" class="game-box symbol choose-opp mx-4">${diffHTML}</div>
             </div>
         </div>`)
     $('#difficulty-easy').on('click', chooseDifficulty)
