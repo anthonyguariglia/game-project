@@ -22,12 +22,10 @@ See a clean, bug-free UI that is responsive to in-game changes
 
 #### WireFrames of App UI
 
-```html
-<img src="/public/HOME-SCREEN.jpg" style="width: 500px">
-<img src="/public/SELECT-SYMBOL.jpg" style="width: 500px">
-<img src="/public/1ST-TURN.jpg" style="width: 500px">
-<img src="/public/PLAY-AGAIN.jpg" style="width: 500px">
-```
+[Home Screen]("/public/HOME-SCREEN.jpg")
+[Select Symbol]("/public/SELECT-SYMBOL.jpg")
+[1st Turn]("/public/1ST-TURN.jpg")
+[Play Again]("/public/PLAY-AGAIN.jpg")
 
 ### Game Flow
 
@@ -50,6 +48,5 @@ Upon completion of the game, a button will appear at the bottom of the screen to
 Once finished, the user may click on the icon at the top-right corner of the screen that displays their email and select 'sign out'. They will receive a message validating the success of that operation and may sign back in at any point after.
 
 ### Link to Deployed Project
-```html
-<a href="https://anthonyguariglia.github.io/anthonyguariglia_tic-tac-toe">Tony's Tic Tac Toe</a>
-```
+
+https://anthonyguariglia.github.io/game-project
