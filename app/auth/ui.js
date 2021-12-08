@@ -25,7 +25,10 @@ const onSignInSuccess = function (response) {
   $('#sign-out-form').css('display', 'unset')
   $('#game-text').html('')
   $('#new-game').css('display', 'unset')
+  $('.sign-up-button').css('display', 'none')
+  $('#exampleModalLabel').text('Sign Out')
   myModal.toggle()
+  $('.signin-response-message').text('')
 }
 
 const onSignInFailure = function () {
@@ -42,6 +45,8 @@ const onSignOutSuccess = function () {
   $('#game-text').html('SIGN IN TO PLAY')
   $('.input-sign-in').css('display', 'unset')
   $('.sign-in-button').css('display', 'unset')
+  $('.sign-up-button').css('display', 'unset')
+  $('#exampleModalLabel').text('Sign In')
 
   $('#new-game').css('display', 'none')
 
@@ -72,6 +77,7 @@ const onSignOutSuccess = function () {
         `)
 
   myModal.toggle()
+  $('.signin-response-message').text('')
 }
 
 const onSignOutFailure = function () {
