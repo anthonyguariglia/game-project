@@ -16,9 +16,9 @@ const darkGreen = '#98e698'
 const backgroundGreen = '#efffef'
 const lightGreen = '#dfffdf'
 
-const backgroundOrange = '#ffd07f'
-const lightOrange = '#fda65d'
-const darkOrange = '#ff8243'
+const backgroundOrange = '#fcecdd'
+const lightOrange = '#ffc288'
+const darkOrange = '#fea82f'
 
 const green = [backgroundGreen, lightGreen, darkGreen]
 const orange = [backgroundOrange, lightOrange, darkOrange]
@@ -488,6 +488,9 @@ const tieGame = function () {
 
   $('#new-game').on('click', onNewGame)
   $('#new-game').css('display', 'unset')
+  $('#new-game').css('background-color', selectedColor)
+  $('#new-game').css('border', selectedColor)
+
   $(`#${0}-${0}`).css('color', 'grey')
   $(`#${0}-${1}`).css('color', 'grey')
   $(`#${0}-${2}`).css('color', 'grey')
