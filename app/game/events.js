@@ -20,8 +20,14 @@ const backgroundOrange = '#fcecdd'
 const lightOrange = '#ffc288'
 const darkOrange = '#fea82f'
 
+const backgroundBlue = '#f3f9fb'
+const lightBlue = '#87c0cd'
+const darkBlue = '#226597'
+
 const green = [backgroundGreen, lightGreen, darkGreen]
 const orange = [backgroundOrange, lightOrange, darkOrange]
+const blue = [backgroundBlue, lightBlue, darkBlue]
+
 let selectedColor = green[2]
 
 const playHTML = '<img src="https://i.imgur.com/4RI44bT.png" title="player" style="height: 170px;" />'
@@ -522,14 +528,24 @@ const onChangeTheme = function (event) {
     dark = orange[2]
     light = orange[1]
     background = orange[0]
+    $('h1').css('color', 'black')
+    $('#new-game').css('color', 'black')
   } else if (color === 'green') {
     dark = green[2]
     light = green[1]
     background = green[0]
+    $('h1').css('color', 'black')
+    $('#new-game').css('color', 'black')
+  } else if (color === 'blue') {
+    dark = blue[2]
+    light = blue[1]
+    background = blue[0]
+    $('h1').css('color', 'white')
+    $('#new-game, #play-again').css('color', 'white')
   }
   $('h1').css('background', dark)
   $('body').css('background-color', background)
-  $('#new-game').css('background-color', light)
+  $('#new-game').css('background-color', dark)
   $('#new-game').css('border', dark)
   $('.login').css('background', light)
   selectedColor = dark

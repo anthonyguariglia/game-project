@@ -16,4 +16,5 @@ $(() => {
 
   $('#orange').on('click', gameEvent.onChangeTheme)
   $('#green').on('click', gameEvent.onChangeTheme)
+  $('#blue').on('click', gameEvent.onChangeTheme)
 })
