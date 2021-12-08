@@ -13,4 +13,8 @@ $(() => {
   $('.sign-out-button').on('click', authEvents.onSignOut)
 
   $('#new-game').on('click', gameEvent.onNewGame)
+
+  $('#orange').on('click', gameEvent.onChangeTheme)
+  $('#green').on('click', gameEvent.onChangeTheme)
+  $('#blue').on('click', gameEvent.onChangeTheme)
 })

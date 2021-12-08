@@ -12,6 +12,24 @@ let gameArray =
 const x = 'X'
 const o = 'O'
 
+const darkGreen = '#98e698'
+const backgroundGreen = '#efffef'
+const lightGreen = '#dfffdf'
+
+const backgroundOrange = '#fcecdd'
+const lightOrange = '#ffc288'
+const darkOrange = '#fea82f'
+
+const backgroundBlue = '#f3f9fb'
+const lightBlue = '#87c0cd'
+const darkBlue = '#226597'
+
+const green = [backgroundGreen, lightGreen, darkGreen]
+const orange = [backgroundOrange, lightOrange, darkOrange]
+const blue = [backgroundBlue, lightBlue, darkBlue]
+
+let selectedColor = green[2]
+
 const playHTML = '<img src="https://i.imgur.com/4RI44bT.png" title="player" style="height: 170px;" />'
 const compHTML = '<img src="https://i.imgur.com/iN79bav.png" title="computer" style="height: 170px;" />'
 
@@ -416,14 +434,14 @@ const evaluate = function () {
         gameArray[row][0] === gameArray[row][1] && gameArray[row][1] === gameArray[row][2]
       ) {
         if (gameArray[row][0] === player[0].symbol) {
-          winner = [true, player[n % 2].name, -10]
+          winner = [true, player[n % 2].name]
         } else if (gameArray[row][0] === player[1].symbol) {
-          winner = [true, player[n % 2].name, 10]
+          winner = [true, player[n % 2].name]
         }
 
-        $(`#${row}-${0}`).css('color', '#98e698')
-        $(`#${row}-${1}`).css('color', '#98e698')
-        $(`#${row}-${2}`).css('color', '#98e698')
+        $(`#${row}-${0}`).css('color', selectedColor)
+        $(`#${row}-${1}`).css('color', selectedColor)
+        $(`#${row}-${2}`).css('color', selectedColor)
       }
     }
   }
@@ -432,38 +450,38 @@ const evaluate = function () {
       if (
         gameArray[0][col] === gameArray[1][col] && gameArray[1][col] === gameArray[2][col]) {
         if (gameArray[0][col] === player[0].symbol) {
-          winner = [true, player[n % 2].name, -10]
+          winner = [true, player[n % 2].name]
         } else if (gameArray[0][col] === player[1].symbol) {
-          winner = [true, player[n % 2].name, 10]
+          winner = [true, player[n % 2].name]
         }
-        $(`#${0}-${col}`).css('color', '#98e698')
-        $(`#${1}-${col}`).css('color', '#98e698')
-        $(`#${2}-${col}`).css('color', '#98e698')
+        $(`#${0}-${col}`).css('color', selectedColor)
+        $(`#${1}-${col}`).css('color', selectedColor)
+        $(`#${2}-${col}`).css('color', selectedColor)
       }
     }
   }
   if (gameArray[0][0]) {
     if (gameArray[0][0] === gameArray[1][1] && gameArray[1][1] === gameArray[2][2]) {
       if (gameArray[0][0] === player[0].symbol) {
-        winner = [true, player[n % 2].name, -10]
+        winner = [true, player[n % 2].name]
       } else if (gameArray[0][0] === player[1].symbol) {
-        winner = [true, player[n % 2].name, 10]
+        winner = [true, player[n % 2].name]
       }
-      $(`#${0}-${0}`).css('color', '#98e698')
-      $(`#${1}-${1}`).css('color', '#98e698')
-      $(`#${2}-${2}`).css('color', '#98e698')
+      $(`#${0}-${0}`).css('color', selectedColor)
+      $(`#${1}-${1}`).css('color', selectedColor)
+      $(`#${2}-${2}`).css('color', selectedColor)
     }
   }
   if (gameArray[0][2]) {
     if (gameArray[0][2] === gameArray[1][1] && gameArray[1][1] === gameArray[2][0]) {
       if (gameArray[0][2] === player[0].symbol) {
-        winner = [true, player[n % 2].name, -10]
+        winner = [true, player[n % 2].name]
       } else if (gameArray[0][2] === player[1].symbol) {
-        winner = [true, player[n % 2].name, 10]
+        winner = [true, player[n % 2].name]
       }
-      $(`#${0}-${2}`).css('color', '#98e698')
-      $(`#${1}-${1}`).css('color', '#98e698')
-      $(`#${2}-${0}`).css('color', '#98e698')
+      $(`#${0}-${2}`).css('color', selectedColor)
+      $(`#${1}-${1}`).css('color', selectedColor)
+      $(`#${2}-${0}`).css('color', selectedColor)
     }
   }
   return winner
@@ -476,6 +494,9 @@ const tieGame = function () {
 
   $('#new-game').on('click', onNewGame)
   $('#new-game').css('display', 'unset')
+  $('#new-game').css('background-color', selectedColor)
+  $('#new-game').css('border', selectedColor)
+
   $(`#${0}-${0}`).css('color', 'grey')
   $(`#${0}-${1}`).css('color', 'grey')
   $(`#${0}-${2}`).css('color', 'grey')
@@ -493,10 +514,46 @@ const endGame = function (winner) {
 
   $('#new-game').on('click', onNewGame)
   $('#new-game').css('display', 'unset')
+  $('#new-game').css('background-color', selectedColor)
+  $('#new-game').css('border', selectedColor)
+}
+
+const onChangeTheme = function (event) {
+  const color = event.target.id
+  console.log(event.target.id)
+  let dark
+  let light
+  let background
+  if (color === 'orange') {
+    dark = orange[2]
+    light = orange[1]
+    background = orange[0]
+    $('h1').css('color', 'black')
+    $('#new-game').css('color', 'black')
+  } else if (color === 'green') {
+    dark = green[2]
+    light = green[1]
+    background = green[0]
+    $('h1').css('color', 'black')
+    $('#new-game').css('color', 'black')
+  } else if (color === 'blue') {
+    dark = blue[2]
+    light = blue[1]
+    background = blue[0]
+    $('h1').css('color', 'white')
+    $('#new-game, #play-again').css('color', 'white')
+  }
+  $('h1').css('background', dark)
+  $('body').css('background-color', background)
+  $('#new-game').css('background-color', dark)
+  $('#new-game').css('border', dark)
+  $('.login').css('background', light)
+  selectedColor = dark
 }
 
 module.exports = {
   onNewGame,
   onClick,
-  chooseSymbol
+  chooseSymbol,
+  onChangeTheme
 }
