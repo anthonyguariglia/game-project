@@ -67,7 +67,7 @@ const onNewGame = function (event) {
   gameWinner = [false, '', 0]
   n = 0
 
-  $('#new-game').fadeOut(500)
+  $('#new-game').css('display', 'none')
   $('.game-window').hide()
   $('.game-window').html(`
       <div id="game-text" class="fs-1 ">
@@ -80,7 +80,6 @@ const onNewGame = function (event) {
   $('.game-window').fadeIn(500)
   $('#player').on('click', chooseOpponent)
   $('#computer').on('click', chooseOpponent)
-  $('.new-game').html('')
 }
 
 const chooseOpponent = function (event) {
