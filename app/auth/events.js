@@ -54,7 +54,6 @@ const onSignUpButton = function (event) {
 }
 
 const onSignInButton = function (event) {
-  console.log('return to sign in triggered')
   event.preventDefault()
   $('.modal-title').html('Sign In')
   $('.modal-body')
