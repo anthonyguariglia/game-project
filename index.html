@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-      <title>Example</title>
+      <title>Tic Tac Toe</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
 
       <!-- Do not add `link` tags-->
@@ -27,6 +27,10 @@
         <button type="button" class="login btn btn-primary end-10 position-absolute top-0 end-0" data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-top: 20px; margin-right: 20px; background: #dfffdf; color: black; border-color: black;">
           Log In
         </button>
+
+       
+        <button class="btn btn-light position-absolute top-0 start-0" data-bs-toggle="modal" id="change-theme" style="margin-top: 20px; margin-left: 20px;" data-bs-target="#choose-theme-modal">Change
+            Theme</button>
       
 
       </header>
@@ -100,9 +104,33 @@
     </section>
 
     <section>
-      <section class="change-theme">
-        <button class="btn btn-warning" id="orange">Orange Theme</button>
-      </section>
+      
+    </section>
+
+    <section class="modal fade" id="choose-theme-modal" aria-labelledby="choose-theme-title" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="choose-theme-title">Choose Theme</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          
+          <div class="modal-body">
+            <section class="d-flex justify-content-center">
+              <!-- Color Selections Go Here -->
+
+              <img src="public/orange-theme.png" class="mx-3" data-bs-toggle="modal" id="orange" style="height: 110px; border: 1px solid black">
+
+              <img data-bs-toggle="modal" id="green" class="mx-3" src="public/green-theme.png" style="height: 110px; border: 1px solid black">
+              <!-- End of Color Selections -->
+            </section>
+          </div>
+          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
     </section>
 
 

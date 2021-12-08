@@ -522,6 +522,10 @@ const onChangeTheme = function (event) {
     dark = orange[2]
     light = orange[1]
     background = orange[0]
+  } else if (color === 'green') {
+    dark = green[2]
+    light = green[1]
+    background = green[0]
   }
   $('h1').css('background', dark)
   $('body').css('background-color', background)
