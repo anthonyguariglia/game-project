@@ -16,65 +16,7 @@
     </head>
     <style> 
     
-    .row-cols-3 {
-      width: 510px;
-    }
-    .game-box {
-      width: 170px;
-      height: 170px;
-    }
-    .choose-opp {
-      width: 170px;
-    }
-    .symbol {
-      font-size: 170px;
-      padding: auto;
-      width: 170px;
-      height: 170px;
-      text-align: center;
-      vertical-align: middle;
-      line-height: 170px;
-    }
-    .sign-in-button {
-      height: 35px;
-      width: 70px;
-    }
-
-    .input-sign-in {
-      height: 35px;
-      width: 180px;
-    }
-
-    .choose-symbol {
-      display: inline;
-    }
-    .choose-symbol:hover {
-      color: grey;
-    }
-    #new-game, #play-again {
-      height: 60px;
-      width: 200px;
-      font-size: 30px;
-      color: black;
-      background-color: #dfffdf;
-      border: 4px solid #98e698;
-      text-align: center;
-      display: none;
-      margin-top: 20px;
-    }
-    #new-game:hover {
-      background-color: white;
-    }
-    #game-text {
-      text-align: center;
-    }
-    .game-board {
-      margin: 0px;
-      max-height: 50%;
-    }
-   #sign-out-form {
-     display: none;
-   }
+    
     </style>
     <body>
 
@@ -153,7 +95,13 @@
     </section>
     <section>
       <section class="new-game container d-flex justify-content-center align-items-center">
-        <button class="btn btn-success" id="new-game">NEW GAME</button>
+        <button class="btn btn-success" id="new-game" style="border: #98e698">NEW GAME</button>
+      </section>
+    </section>
+
+    <section>
+      <section class="change-theme">
+        <button class="btn btn-warning" id="orange">Orange Theme</button>
       </section>
     </section>
 
